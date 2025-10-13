@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/miniyandexmusic
+    username: postgres
+    password: fuck
+  server:
+    address: 0.0.0.0
+    port: 8080
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  boot:
+    docker:
+      compose:
+        enabled: false
