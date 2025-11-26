@@ -1,1 +1,32 @@
 services:
+  backend:
+    build: .
+    container_name: minim_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/miniyandexmusic
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: strong_password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: none
+      SPRING_FLYWAY_ENABLED: true
+      SPRING_FLYWAY_LOCATIONS: classpath:db/migration
+    restart: always
+
+  db:
+    image: postgres:15-alpine
+    container_name: minim_db
+    environment:
+      POSTGRES_DB: miniyandexmusic
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: strong_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+volumes:
+  postgres_data:

@@ -20,7 +20,6 @@ class DataInit(private val trackR: TrackRepository) : CommandLineRunner {
                 try {
                     val mp3 = Mp3File(file)
                     var imagePath: String? = null
-
                     if (mp3.hasId3v2Tag()) {
                         val tag = mp3.id3v2Tag
                         val imageData = tag.albumImage
@@ -39,10 +38,13 @@ class DataInit(private val trackR: TrackRepository) : CommandLineRunner {
                     tracks += Track(
                         title = title,
                         artist = artist,
-                        url = "/tracks/${file.name}",
+                        url = "http://10.0.2.2:8080/tracks/${file.name}",
                         duration = duration,
-                        imageUrl = imagePath
+                        imageUrl = "http://10.0.2.2:8080$imagePath"
                     )
+                    println("Creating track: $title")
+                    println("URL: ${tracks.last().url}")
+                    println("Image: ${tracks.last().imageUrl}")
                 } catch (e: Exception) {
                     println("⚠️ Ошибка при обработке ${file.name}: ${e.message}")
                 }
@@ -50,7 +52,6 @@ class DataInit(private val trackR: TrackRepository) : CommandLineRunner {
             trackR.saveAll(tracks)
             println("✅ Added ${tracks.size} demo tracks with covers")
         }
-//        trackR.deleteAll()
-        println(trackR.findAll())
+
     }
 }
