@@ -52,6 +52,6 @@ class DataInit(private val trackR: TrackRepository) : CommandLineRunner {
             trackR.saveAll(tracks)
             println("✅ Added ${tracks.size} demo tracks with covers")
         }
-
+       //trackR.deleteAll()
     }
 }
